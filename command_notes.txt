@@ -1,0 +1,22 @@
+
+https://support.acquia.com/hc/en-us/articles/360004119234-Verifying-the-validity-of-an-SSL-certificate
+Follow this: https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs
+https://pagefault.blog/2019/04/22/how-to-sign-and-verify-using-openssl/
+
+https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/
+
+End-to-End check example: https://gist.github.com/Soarez/9688998
+
+# Generate a private key and a CSR
+openssl req -newkey rsa:2048 -nodes -keyout domain.key -out domain.csr
+
+# Generate key pairs
+
+Private key:
+openssl genrsa -out myca_private.key 2048
+
+Public key:
+openssl rsa -in myca_private.key -pubout -out myca_public.key
+
+# Sign certificate from existing private key and csr 
+openssl x509 -signkey myca_private.key -in domain.csr -req -days 365 -out domain.crt
